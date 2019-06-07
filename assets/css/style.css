@@ -1,0 +1,127 @@
+/* CSS VARIABLES */
+
+:root {
+  --main-bg-color: rgba(136, 131, 131, 0.5);
+  --q-bg-color: rgba(228, 27, 27, 0.8);
+}
+
+/* Blurred Background */
+
+.content::before {
+  content: "";
+  background-image: url(//unsplash.it/1000/1000);
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 5px;
+}
+
+/* RESET */
+
+body * {
+  color: black;
+  box-sizing: border-box;
+}
+
+/* MAIN STYLING */
+
+.container-head {
+  padding: 1em;
+  margin: 2vh auto 0 auto;
+  width: 40vw;
+  background-color: var(--main-bg-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.container-main {
+  padding: 1em;
+  margin: 2vh auto;
+  width: 60vw;
+  background-color: var(--main-bg-color);
+  border-radius: 10px;
+}
+
+.container {
+  display: flex;
+  width: 60vw;
+  margin: 0 auto;
+}
+
+.header,
+.progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.three-quarter {
+  width: 85%;
+}
+
+.quarter {
+  width: 15%;
+  margin-right: 10px;
+}
+
+#timing {
+  color: white;
+  -webkit-text-stroke: black 1px;
+  font-size: 2.5em;
+}
+
+#questionText {
+  padding: 1rem 2rem;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+.answer {
+  background-color: var(--q-bg-color);
+  border-radius: 10px;
+  color: white;
+  padding: 0.5rem;
+  border: 0.5px solid black;
+}
+
+.container-prog {
+  padding: 0;
+  margin: 2vh auto;
+  width: 60vw;
+  /* background-color: var(--main-bg-color); */
+  border-radius: 10px;
+}
+
+.ldBar-label {
+  color: var(--q-bg-color);
+  font-family: tahoma;
+  font-size: 1.5em;
+  font-weight: 900;
+  -webkit-text-stroke: rgb(175, 174, 174) 1px;
+}
