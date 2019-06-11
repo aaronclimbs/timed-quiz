@@ -38,8 +38,39 @@ class Quiz {
   handleGuess = guess => {
     if (this.getQIndex().checkAnswer(guess)) {
       this.score++;
+      this.questionIndex++;
+      addContent();
+      // set conditional so timeout doesn't run twice
+    } else if (guess === "") {
+      this.questionIndex++;
+      addContent();
+      // set conditional for wrong guess with message
+    } else {
+      const el = document.createElement("p");
+      el.classList.add("message");
+      el.appendChild(
+        document.createTextNode(
+          `Sorry! ${myQuiz.getQIndex().answer} was the correct answer.`
+        )
+      );
+      document.querySelector(".main").appendChild(el);
+      // clearInterval(intervalID);
+      setTimeout(() => {
+        this.questionIndex++;
+        addContent();
+      }, 1000);
     }
-    this.questionIndex++;
+  };
+
+  resetGame = () => {
+    this.questionIndex = 0;
+    document.querySelector(".quarter").style.display = "";
+    document.querySelector(
+      ".container-main"
+    ).innerHTML = `<div id="questionText">
+          <h3 class="question"></h3>
+        </div><div class="main"></div>`;
+    addContent();
   };
 }
 
@@ -112,14 +143,26 @@ function addContent() {
   if (myQuiz.quizOver()) {
     bar.set(100);
     getResults();
+    const resetBtn = document.createElement("button");
+    const resetDiv = document.createElement("div");
+    resetBtn.textContent = "Reset Game";
+    resetDiv.style.display = "flex";
+    resetDiv.style.justifyContent = "center";
+    resetDiv.style.alignItems = "center";
+    resetBtn.addEventListener("click", myQuiz.resetGame);
+    resetDiv.appendChild(resetBtn);
+    document.querySelector(".content").appendChild(resetDiv);
   } else {
     // update status bar
     bar.set((myQuiz.questionIndex / myQuiz.questions.length) * 100);
     // write question to document
+    // clear all intervals // I know this is bad practice but I was stuck in interval hell
+    for (i = 0; i < 100; i++) {
+      window.clearInterval(i);
+    }
     const questionText = document.querySelector(".question");
     questionText.textContent = myQuiz.getQIndex().prompt;
     // handle timer reset
-    const timer = document.querySelector("#timing");
     const choiceDiv = document.querySelector(".main");
     while (choiceDiv.firstChild) {
       choiceDiv.removeChild(choiceDiv.firstChild);
@@ -137,16 +180,24 @@ function addContent() {
       choiceDiv.appendChild(el);
       guess(`#choice${i}`, choice);
     });
-    // set interval
+    // set interval for timer countdown
     let sec = 10;
     intervalID = setInterval(() => {
-      timerStarted = true;
       document.getElementById("timing").textContent = sec;
       sec--;
-      if (sec === -1) {
+      if (sec < 0) {
         clearInterval(intervalID);
-        myQuiz.handleGuess("");
-        addContent();
+        const el = document.createElement("p");
+        el.classList.add("message");
+        el.appendChild(
+          document.createTextNode(
+            `Time's up! ${myQuiz.getQIndex().answer} was the correct answer.`
+          )
+        );
+        document.querySelector(".main").appendChild(el);
+        setTimeout(() => {
+          myQuiz.handleGuess("");
+        }, 1000);
       }
     }, 1000);
   }
@@ -154,10 +205,9 @@ function addContent() {
 
 function guess(id, guess) {
   const btn = document.querySelector(id);
-  btn.addEventListener("click", e => {
-    myQuiz.handleGuess(guess);
+  btn.addEventListener("click", () => {
     clearInterval(intervalID);
-    addContent();
+    myQuiz.handleGuess(guess);
   });
 }
 

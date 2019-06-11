@@ -102,6 +102,13 @@ body * {
   padding: 1rem;
 }
 
+.message {
+  align-self: center;
+  justify-self: center;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
 .choice {
   background-color: var(--q-bg-color);
   border-radius: 10px;
