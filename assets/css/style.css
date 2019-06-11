@@ -102,12 +102,51 @@ body * {
   padding: 1rem;
 }
 
-.answer {
+.choice {
   background-color: var(--q-bg-color);
   border-radius: 10px;
   color: white;
   padding: 0.5rem;
-  border: 0.5px solid black;
+  text-align: left;
+  /* border: 0.5px solid black; */
+  position: relative;
+}
+
+.choice span {
+  padding-left: 0.5em;
+}
+
+.choice:focus,
+.choice:focus::after {
+  outline: none;
+}
+
+.choice::after {
+  content: "";
+  background: rgba(256, 256, 256, 0.2);
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  right: 3px;
+  border-radius: 10px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease-in;
+  z-index: -1;
+}
+
+.choice:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+  cursor: pointer;
+}
+
+.is-finished {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container-prog {
@@ -121,7 +160,7 @@ body * {
 .ldBar-label {
   color: var(--q-bg-color);
   font-family: tahoma;
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: 900;
   -webkit-text-stroke: rgb(175, 174, 174) 1px;
 }
