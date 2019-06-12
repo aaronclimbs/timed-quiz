@@ -10,9 +10,9 @@ class Question {
   }
 
   //check correct guess
-  checkAnswer = guess => {
+  checkAnswer(guess) {
     return guess === this.answer;
-  };
+  }
 }
 
 //Declare quiz class
